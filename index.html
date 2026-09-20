@@ -64,6 +64,26 @@
         <div><label id="wakeLabel">Début des rappels</label><input class="input" id="wakeInput" type="time"></div>
         <div><label id="sleepLabel">Fin des rappels</label><input class="input" id="sleepInput" type="time"></div>
         <button class="save" id="saveSettings">Enregistrer</button>
+        <div style="margin-top:14px;padding:16px;background:#F7FBFB;border:1px solid rgba(20,52,49,.08);border-radius:18px;">
+  <strong style="display:block;margin-bottom:5px;">Rappels d’hydratation 💧</strong>
+  <span style="display:block;color:#6B8581;font-size:13px;line-height:1.4;margin-bottom:12px;">
+    Active les notifications pour recevoir un rappel même lorsque l’application est fermée.
+  </span>
+
+  <button
+    class="primary"
+    id="enablePushBtn"
+    type="button"
+    style="box-shadow:none;"
+  >
+    Activer les rappels
+  </button>
+
+  <div
+    id="pushStatus"
+    style="margin-top:10px;color:#6B8581;font-size:12px;text-align:center;"
+  ></div>
+</div>
         <button class="secondary" id="logoutBtn">Se déconnecter</button>
       </div>
     </div></section>
