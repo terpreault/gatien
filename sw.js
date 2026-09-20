@@ -1,4 +1,4 @@
-const VERSION = "gassien-v2.1.0";
+const VERSION = "gassien-v2.2.0";
 
 const STATIC = [
   "./",
