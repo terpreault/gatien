@@ -135,3 +135,95 @@ if("serviceWorker" in navigator){
  let refreshing=false;navigator.serviceWorker.addEventListener("controllerchange",()=>{if(!refreshing){refreshing=true;location.reload()}});
 }
 init();
+function urlBase64ToUint8Array(base64String) {
+  const padding = "=".repeat((4 - base64String.length % 4) % 4);
+  const base64 = (base64String + padding)
+    .replace(/-/g, "+")
+    .replace(/_/g, "/");
+
+  const rawData = window.atob(base64);
+  return Uint8Array.from([...rawData].map(char => char.charCodeAt(0)));
+}
+
+async function enablePushReminders() {
+  const status = document.getElementById("pushStatus");
+
+  try {
+    if (!userId || !sb) {
+      status.textContent = "Connecte-toi d’abord.";
+      return;
+    }
+
+    if (
+      !("serviceWorker" in navigator) ||
+      !("PushManager" in window) ||
+      !("Notification" in window)
+    ) {
+      status.textContent = "Les notifications ne sont pas supportées sur cet appareil.";
+      return;
+    }
+
+    if (!C.VAPID_PUBLIC_KEY) {
+      status.textContent = "Clé de notification manquante.";
+      return;
+    }
+
+    const permission = await Notification.requestPermission();
+
+    if (permission !== "granted") {
+      status.textContent = "Notifications non autorisées.";
+      return;
+    }
+
+    status.textContent = "Activation en cours…";
+
+    const registration = await navigator.serviceWorker.ready;
+
+    let subscription =
+      await registration.pushManager.getSubscription();
+
+    if (!subscription) {
+      subscription = await registration.pushManager.subscribe({
+        userVisibleOnly: true,
+        applicationServerKey:
+          urlBase64ToUint8Array(C.VAPID_PUBLIC_KEY)
+      });
+    }
+
+    const data = subscription.toJSON();
+
+    const { error } = await sb
+      .from("push_subscriptions")
+      .upsert(
+        {
+          user_id: userId,
+          endpoint: data.endpoint,
+          p256dh: data.keys.p256dh,
+          auth: data.keys.auth,
+          updated_at: new Date().toISOString()
+        },
+        {
+          onConflict: "endpoint"
+        }
+      );
+
+    if (error) throw error;
+
+    status.textContent = "✓ Rappels activés";
+    toast("Notifications activées 💧");
+
+  } catch (error) {
+    console.error(error);
+    status.textContent = "Impossible d’activer les rappels.";
+    toast("Erreur lors de l’activation");
+  }
+}
+
+const enablePushBtn = document.getElementById("enablePushBtn");
+
+if (enablePushBtn) {
+  enablePushBtn.addEventListener(
+    "click",
+    enablePushReminders
+  );
+}
