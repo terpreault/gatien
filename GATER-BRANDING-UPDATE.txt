@@ -1,0 +1,20 @@
+GATER BRANDING V3
+
+Brand applied:
+- Name: GATER
+- Petroleum Blue: #245A68
+- Aqua: #74C9D4
+- Coral: #FF8A76
+- Ice White: #F5FAFB
+- Approved primary app icon extracted from the supplied GATER brand board.
+
+GitHub update:
+Replace the files in the repository with the contents of this folder, including the icons folder.
+The Supabase tables/data do not change. The internal GASSIEN_CONFIG and localStorage key are intentionally preserved so existing configuration/data continue to work.
+
+Supabase Edge Function:
+Replace the code of send-water-test with edge-function-send-water-test.ts if you want test pushes to say GATER instead of GASSIEN.
+The VAPID private key remains only in Supabase Secrets.
+
+Cache/version:
+Service worker version is gater-v3.0.0 and index uses ?v=3000 to force the new branding to load.
