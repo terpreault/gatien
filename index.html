@@ -1,27 +1,41 @@
-<!doctype html><html lang="fr"><head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
-<meta name="theme-color" content="#245A68">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="default">
-<meta name="apple-mobile-web-app-title" content="GATER">
-<link rel="manifest" href="manifest.json">
-<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
-<link rel="stylesheet" href="styles.css?v=3000">
-<script src="config.js?v=3000"></script>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<title>GATER — Hydration Tracking App</title></head>
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+  <meta name="theme-color" content="#F5FAFB">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="GATER">
+  <link rel="manifest" href="manifest.json">
+  <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+  <link rel="stylesheet" href="styles.css?v=4000">
+  <script src="config.js?v=4000"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <title>GATER — Hydration Tracking App</title>
+</head>
 <body>
+
+<div class="launch-splash" id="launchSplash" aria-hidden="true">
+  <div class="launch-inner">
+    <img src="icons/icon-192.png" alt="">
+    <div class="launch-name">GATER</div>
+    <div class="launch-kicker">HYDRATION TRACKING APP</div>
+    <p>Small habits.<br>A brighter you.</p>
+  </div>
+  <div class="launch-wave one"></div><div class="launch-wave two"></div>
+</div>
+
 <div class="auth" id="auth">
   <div class="auth-card">
     <img class="auth-logo" src="icons/icon-192.png" alt="GATER">
-    <h1>GATER</h1>
+    <div class="auth-wordmark">GATER</div>
     <div class="brand-kicker">HYDRATION TRACKING APP</div>
-    <p id="authIntro">Connecte-toi pour retrouver tes données sur tous tes appareils.</p>
+    <p id="authIntro">Connecte-toi pour retrouver ton suivi d’hydratation sur tous tes appareils.</p>
     <div id="configWarning" class="setup-warning hidden">Supabase n’est pas encore configuré. L’app fonctionne en mode local de démonstration.</div>
     <div class="form-grid" id="authFields">
-      <div><label>Email</label><input class="input" id="email" type="email" autocomplete="email"></div>
-      <div><label>Mot de passe</label><input class="input" id="password" type="password" autocomplete="current-password"></div>
+      <div><label for="email">Email</label><input class="input" id="email" type="email" autocomplete="email"></div>
+      <div><label for="password">Mot de passe</label><input class="input" id="password" type="password" autocomplete="current-password"></div>
     </div>
     <div class="auth-actions">
       <button class="primary" id="loginBtn">Se connecter</button>
@@ -32,65 +46,168 @@
 </div>
 
 <div class="app">
-  <div class="topbar">
-    <div class="brand">
+  <header class="topbar">
+    <button class="brand brand-button" type="button" data-go-home aria-label="GATER accueil">
       <img class="brand-icon" src="icons/icon-192.png" alt="">
       <div class="brand-copy"><strong>GATER</strong><span>HYDRATION TRACKING APP</span></div>
+    </button>
+    <div class="top-actions">
+      <div class="sync-pill"><span class="dot" id="syncDot"></span><span id="syncText">Local</span></div>
+      <button class="lang" id="langBtn" type="button">FR</button>
     </div>
-    <div><button class="lang" id="langBtn">FR</button></div>
-  </div>
-  <div class="sync"><span class="dot" id="syncDot"></span><span id="syncText">Local</span></div>
+  </header>
 
-  <main style="margin-top:14px">
+  <main>
     <section class="screen active" data-screen="today">
-      <h1 class="hello" id="hello">Salut Gassien 👋</h1>
-      <p class="subtitle" id="subtitle">Un petit verre maintenant, ton corps te remerciera plus tard.</p>
-      <div class="hero">
-        <div class="ring-wrap"><div class="ring" id="ring" style="--progress:0"></div><div class="ring-content">
-          <div class="value"><span id="currentMl">0</span> ml</div><div class="goal"><span id="ofText">sur</span> <span id="goalMl">2000</span> ml</div><div class="percent" id="percent">0%</div>
-        </div></div>
-        <div class="next-card"><div><small id="nextLabel">Prochain rappel</small><strong id="countdown">--:--</strong></div><div class="drop">💧</div></div>
-        <button class="primary" id="drink250">+ Boire 250 ml</button>
+      <div class="home-heading">
+        <div>
+          <div class="eyebrow" id="hello">Bonjour Gatien,</div>
+          <h1 id="subtitle">On s’hydrate !</h1>
+        </div>
+        <div class="sun-mark" aria-hidden="true">☀︎</div>
       </div>
-      <div class="quick-title" id="quickLabel">Ajout rapide</div>
-      <div class="quick-grid"><button class="quick" data-ml="150">150 ml</button><button class="quick" data-ml="250">250 ml</button><button class="quick" data-ml="330">330 ml</button><button class="quick" data-ml="500">500 ml</button></div>
-      <div class="mini-grid">
-        <div class="mini"><small id="glassesLabel">Verres</small><strong id="glassCount">0</strong></div>
-        <div class="mini"><small id="remainingLabel">Restant</small><strong id="remaining">2,0 L</strong></div>
-        <div class="mini"><small id="syncLabel">Cloud</small><strong id="cloudState">—</strong></div>
-      </div>
-    </section>
-    <section class="screen" data-screen="history"><div class="card"><h2 id="historyTitle">Historique</h2><p class="lead" id="historyLead">Les dernières prises enregistrées aujourd’hui.</p><div class="list" id="historyList"></div></div></section>
-    <section class="screen" data-screen="progress"><div class="card"><h2 id="progressTitle">Progression</h2><p class="lead" id="progressLead">Vue simple de ta semaine.</p><div class="list" id="weekList"></div></div></section>
-    <section class="screen" data-screen="settings"><div class="card">
-      <h2 id="settingsTitle">Réglages</h2><p class="lead" id="settingsLead">Adapte l’app au rythme de ta journée.</p>
-      <div class="form-grid">
-        <div><label id="goalLabel">Objectif quotidien (ml)</label><input class="input" id="goalInput" type="number" min="500" step="50"></div>
-        <div><label id="intervalLabel">Rappel toutes les</label><select class="input" id="intervalInput"><option value="30">30 min</option><option value="45">45 min</option><option value="60">60 min</option><option value="90">90 min</option><option value="120">120 min</option></select></div>
-        <div><label id="wakeLabel">Début des rappels</label><input class="input" id="wakeInput" type="time"></div>
-        <div><label id="sleepLabel">Fin des rappels</label><input class="input" id="sleepInput" type="time"></div>
-        <button class="save" id="saveSettings">Enregistrer</button>
 
-        <div class="reminder-panel">
-          <div class="reminder-eyebrow">GATER REMINDERS</div>
-          <strong>Rappels d’hydratation 💧</strong>
-          <span>Active les notifications pour recevoir un rappel même lorsque l’application est fermée.</span>
-          <button class="primary reminder-enable" id="enablePushBtn" type="button">Activer les rappels</button>
-          <button class="secondary" id="testPushBtn" type="button">Envoyer une notification test</button>
-          <div id="pushStatus" class="push-status"></div>
+      <div class="hydration-card">
+        <div class="ring-wrap">
+          <div class="ring" id="ring" style="--progress:0"></div>
+          <div class="ring-content">
+            <div class="value"><span id="currentMl">0</span> <small>ml</small></div>
+            <div class="goal"><span id="ofText">sur</span> <span id="goalMl">2000</span> ml</div>
+            <div class="percent" id="percent">0%</div>
+          </div>
         </div>
 
-        <button class="secondary" id="logoutBtn">Se déconnecter</button>
+        <div class="quick-grid" id="homeQuickGrid">
+          <button class="quick" data-ml="150" type="button"><span class="cup-svg"><svg viewBox="0 0 24 28"><path d="M4 3h16l-1.5 22h-13L4 3Z"/></svg></span><strong>150</strong><small>ml</small></button>
+          <button class="quick" data-ml="250" type="button"><span class="cup-svg"><svg viewBox="0 0 24 28"><path d="M4 3h16l-1.5 22h-13L4 3Z"/></svg></span><strong>250</strong><small>ml</small></button>
+          <button class="quick" data-ml="330" type="button"><span class="cup-svg"><svg viewBox="0 0 24 28"><path d="M4 3h16l-1.5 22h-13L4 3Z"/></svg></span><strong>330</strong><small>ml</small></button>
+          <button class="quick" data-ml="500" type="button"><span class="cup-svg"><svg viewBox="0 0 24 28"><path d="M4 3h16l-1.5 22h-13L4 3Z"/></svg></span><strong>500</strong><small>ml</small></button>
+        </div>
       </div>
-    </div></section>
+
+      <button class="reminder-card" type="button" data-target-settings>
+        <span class="reminder-icon">♢</span>
+        <span class="reminder-copy"><strong id="nextLabel">Prochain rappel</strong><small id="reminderHint">Un peu d’eau au bon moment.</small></span>
+        <span class="countdown" id="countdown">--:--</span>
+        <span class="chevron">›</span>
+      </button>
+
+      <div class="home-summary">
+        <div class="summary-tile"><span id="glassesLabel">Prises</span><strong id="glassCount">0</strong></div>
+        <div class="summary-tile"><span id="remainingLabel">Restant</span><strong id="remaining">2,0 L</strong></div>
+        <div class="summary-tile"><span id="todayGoalLabel">Objectif</span><strong id="goalSummary">2,0 L</strong></div>
+      </div>
+    </section>
+
+    <section class="screen" data-screen="progress">
+      <div class="page-header">
+        <div class="eyebrow" id="progressKicker">HYDRATATION</div>
+        <h1 id="progressTitle">Ta progression</h1>
+        <p id="progressLead">Une vue claire de ton rythme.</p>
+      </div>
+
+      <div class="card progress-card">
+        <div class="segmented" id="periodSelector">
+          <button class="segment active" data-period="week" type="button" id="periodWeek">Semaine</button>
+          <button class="segment" data-period="month" type="button" id="periodMonth">Mois</button>
+          <button class="segment" data-period="year" type="button" id="periodYear">Année</button>
+        </div>
+        <div class="chart-wrap">
+          <div class="goal-line"><span id="chartGoalLabel">objectif</span></div>
+          <div class="bar-chart" id="progressChart"></div>
+        </div>
+      </div>
+
+      <div class="stat-grid">
+        <div class="stat-card"><span class="stat-icon coral">◇</span><strong id="streakValue">0</strong><small id="streakLabel">jours de série</small></div>
+        <div class="stat-card"><span class="mini-ring-icon" id="miniRingIcon"><i></i></span><strong id="completionValue">0%</strong><small id="completionLabel">objectif du jour</small></div>
+      </div>
+
+      <div class="encouragement-card">
+        <span class="tiny-bars" aria-hidden="true"><i></i><i></i><i></i></span>
+        <div><strong id="encouragementTitle">Continue comme ça !</strong><small id="encouragementText">Chaque verre compte dans ta routine.</small></div>
+      </div>
+    </section>
+
+    <section class="screen" data-screen="history">
+      <div class="page-header">
+        <div class="eyebrow" id="historyKicker">JOURNAL</div>
+        <h1 id="historyTitle">Historique</h1>
+        <p id="historyLead">Retrouve tes prises récentes.</p>
+      </div>
+
+      <div class="card calendar-card">
+        <div class="calendar-head">
+          <button class="calendar-arrow" id="prevMonth" type="button" aria-label="Mois précédent">‹</button>
+          <strong id="historyMonthLabel"></strong>
+          <button class="calendar-arrow" id="nextMonth" type="button" aria-label="Mois suivant">›</button>
+        </div>
+        <div class="weekday-row" id="weekdayRow"></div>
+        <div class="calendar-grid" id="calendarGrid"></div>
+      </div>
+
+      <div class="section-heading"><strong id="recentLogsTitle">Prises récentes</strong><span id="historyTotal"></span></div>
+      <div class="recent-list" id="historyList"></div>
+    </section>
+
+    <section class="screen" data-screen="settings">
+      <div class="page-header">
+        <div class="eyebrow">GATER</div>
+        <h1 id="settingsTitle">Réglages</h1>
+        <p id="settingsLead">Adapte GATER à ton rythme.</p>
+      </div>
+
+      <div class="card settings-card">
+        <div class="settings-section-title" id="dailyGoalTitle">Objectif quotidien</div>
+        <div class="form-grid">
+          <div><label id="goalLabel" for="goalInput">Objectif quotidien (ml)</label><input class="input" id="goalInput" type="number" min="500" step="50"></div>
+          <div><label id="intervalLabel" for="intervalInput">Rappel toutes les</label><select class="input" id="intervalInput"><option value="30">30 min</option><option value="45">45 min</option><option value="60">60 min</option><option value="90">90 min</option><option value="120">120 min</option></select></div>
+          <div class="two-cols">
+            <div><label id="wakeLabel" for="wakeInput">Début</label><input class="input" id="wakeInput" type="time"></div>
+            <div><label id="sleepLabel" for="sleepInput">Fin</label><input class="input" id="sleepInput" type="time"></div>
+          </div>
+          <button class="save" id="saveSettings" type="button">Enregistrer</button>
+        </div>
+      </div>
+
+      <div class="reminder-panel">
+        <div class="reminder-panel-top"><span class="notification-symbol">●</span><div><div class="reminder-eyebrow">GATER REMINDERS</div><strong id="pushTitle">Rappels d’hydratation</strong></div></div>
+        <span id="pushDescription">Active les notifications pour recevoir un rappel même lorsque l’application est fermée.</span>
+        <button class="primary reminder-enable" id="enablePushBtn" type="button">Activer les rappels</button>
+        <button class="secondary" id="testPushBtn" type="button">Envoyer une notification test</button>
+        <div id="pushStatus" class="push-status"></div>
+      </div>
+
+      <button class="secondary logout" id="logoutBtn" type="button">Se déconnecter</button>
+    </section>
   </main>
-  <nav class="bottom-nav">
-    <button class="nav-btn active" data-target="today"><span class="ico">⌂</span><span>Aujourd’hui</span></button>
-    <button class="nav-btn" data-target="history"><span class="ico">◷</span><span>Historique</span></button>
-    <button class="nav-btn" data-target="progress"><span class="ico">↗</span><span>Progression</span></button>
-    <button class="nav-btn" data-target="settings"><span class="ico">⚙︎</span><span>Réglages</span></button>
+
+  <nav class="bottom-nav" aria-label="Navigation principale">
+    <button class="nav-btn active" data-target="today" type="button"><span class="nav-icon">⌂</span><span id="navHome">Accueil</span></button>
+    <button class="nav-btn" data-target="progress" type="button"><span class="nav-icon">▥</span><span id="navProgress">Progrès</span></button>
+    <button class="add-nav" id="openAdd" type="button" aria-label="Ajouter de l’eau"><span>+</span></button>
+    <button class="nav-btn" data-target="history" type="button"><span class="nav-icon">◷</span><span id="navHistory">Historique</span></button>
+    <button class="nav-btn" data-target="settings" type="button"><span class="nav-icon">≡</span><span id="navSettings">Réglages</span></button>
   </nav>
 </div>
+
+<div class="sheet-backdrop hidden" id="addSheet" aria-hidden="true">
+  <div class="sheet" role="dialog" aria-modal="true" aria-labelledby="addTitle">
+    <div class="sheet-handle"></div>
+    <div class="sheet-head"><button class="sheet-close" id="closeAdd" type="button">×</button><h2 id="addTitle">Ajouter de l’eau</h2><span></span></div>
+    <div class="water-chip" id="waterChip">Eau</div>
+    <div class="add-grid">
+      <button class="add-option" data-add-ml="150" type="button"><span class="cup-svg large"><svg viewBox="0 0 24 28"><path d="M4 3h16l-1.5 22h-13L4 3Z"/></svg></span><strong>150 ml</strong></button>
+      <button class="add-option" data-add-ml="250" type="button"><span class="cup-svg large"><svg viewBox="0 0 24 28"><path d="M4 3h16l-1.5 22h-13L4 3Z"/></svg></span><strong>250 ml</strong></button>
+      <button class="add-option" data-add-ml="330" type="button"><span class="cup-svg large"><svg viewBox="0 0 24 28"><path d="M4 3h16l-1.5 22h-13L4 3Z"/></svg></span><strong>330 ml</strong></button>
+      <button class="add-option" data-add-ml="500" type="button"><span class="cup-svg large"><svg viewBox="0 0 24 28"><path d="M4 3h16l-1.5 22h-13L4 3Z"/></svg></span><strong>500 ml</strong></button>
+    </div>
+    <div class="custom-row"><span class="pencil-symbol">✎</span><label for="customMl" id="customLabel">Quantité personnalisée</label><input id="customMl" class="custom-input" type="number" min="1" step="10" inputmode="numeric" placeholder="ml"></div>
+    <button class="primary aqua-button" id="addCustomBtn" type="button">Ajouter au journal</button>
+  </div>
+</div>
+
 <div class="toast" id="toast"></div>
-<script src="app.js?v=3000"></script>
-</body></html>
+<script src="app.js?v=4000"></script>
+</body>
+</html>

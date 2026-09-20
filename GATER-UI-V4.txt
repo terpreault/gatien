@@ -1,0 +1,28 @@
+GATER UI V4 — MOCKUP-INSPIRED REDESIGN
+
+What changed
+- New premium iOS-style home screen inspired by the approved GATER mockup.
+- Large hydration progress ring with daily intake / goal.
+- Four quick-add water cards: 150 / 250 / 330 / 500 ml.
+- Central + button opening a dedicated Add Water sheet, including custom amount.
+- New Progress screen with Week / Month / Year chart, hydration streak and daily goal completion.
+- New History screen with monthly calendar and recent water logs.
+- Refined Settings / Reminder screens using the Ocean Night brand identity.
+- New 5-item bottom navigation: Home / Progress / Add / History / Settings.
+- FR / EN translations retained and expanded.
+- Supabase authentication, hydration tables, realtime sync, push subscription and push test logic retained.
+- Existing internal GASSIEN_CONFIG and localStorage key intentionally retained for compatibility with the existing deployment/data.
+
+Brand
+- Petroleum Blue: #245A68
+- Aqua: #74C9D4
+- Coral: #FF8A76
+- Ice White: #F5FAFB
+
+Cache
+- Service worker bumped to gater-v4.0.0.
+- index.html now loads app.js / styles.css / config.js with ?v=4000.
+
+Deploy
+Replace the repository files with all files from this package, preserving the complete icons folder and config.js.
+No Supabase SQL/database change is required for this UI update.

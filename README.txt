@@ -1,32 +1,38 @@
-
-GATER V3 — CLOUD + REALTIME + AUTO UPDATE
+GATER V4 — OCEAN NIGHT UI + CLOUD + REALTIME + PUSH
 
 WHAT IS READY
-- Installable PWA.
+- Installable PWA with the approved GATER Ocean Night identity.
+- Premium mobile interface inspired by the approved GATER mockups.
+- Launch splash screen with GATER branding.
 - FR / EN interface.
-- Water intake + daily target + history + 7-day view.
+- Daily hydration ring and quick-add buttons (150 / 250 / 330 / 500 ml).
+- Central Add Water sheet with custom amount.
+- Progress screen with Week / Month / Year charts, streak and daily completion.
+- History screen with monthly calendar and recent logs.
+- Settings for daily goal and reminder schedule.
 - Supabase email/password authentication.
-- Cloud persistence across devices.
-- Supabase Realtime subscriptions for settings and water logs.
+- Cloud persistence across devices and Supabase Realtime sync.
+- Push subscription + test notification controls.
 - admin.html remote control page for an authorized admin.
-- Service worker update strategy: new deployments replace old cached app files automatically.
-- Local demo mode if Supabase has not yet been configured.
+- Service worker auto-update strategy.
+- Local demo mode when Supabase is not configured.
 
-SETUP
-1. Create a Supabase project.
-2. Open SQL Editor and run supabase-setup.sql.
-3. In Authentication settings, enable Email/Password.
-4. Copy Project URL + browser publishable key into config.js.
-5. Deploy the complete folder to GitHub / Netlify.
-6. Open the main app and create Gassien's account.
-7. Open admin.html and create/sign in to your admin account.
-8. In Supabase Authentication > Users, copy both user UUIDs.
-9. Run in SQL Editor:
-   insert into public.admin_links(admin_user_id, subject_user_id)
-   values ('YOUR_ADMIN_USER_UUID','GASSIEN_USER_UUID');
-10. Reload admin.html. You can now change Gassien's target/reminder settings remotely.
+BRAND COLORS
+- Petroleum Blue: #245A68
+- Aqua: #74C9D4
+- Coral: #FF8A76
+- Ice White: #F5FAFB
+
+DEPLOY
+1. Replace the files in your existing GATER GitHub repository with all files from this package.
+2. Keep config.js exactly as supplied in this package so your current Supabase configuration remains connected.
+3. Commit and push the changes.
+4. Your host (for example Netlify) can then redeploy from GitHub.
+5. Reopen GATER. The V4 service worker forces the new app files to replace the old cached version.
+
+DATABASE
+No Supabase SQL or table change is required for this V4 visual update.
+The internal GASSIEN_CONFIG name and gassienLocal localStorage key are intentionally preserved to avoid breaking the current configuration and locally stored data.
 
 IMPORTANT
-- Never put a Supabase service_role key in config.js.
-- Background push notifications are a separate next step. This V2 solves cloud data,
-  realtime sync and app-code auto-updates.
+Never put a Supabase service_role key or VAPID private key in config.js.
