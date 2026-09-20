@@ -1,0 +1,36 @@
+<!doctype html><html lang="fr"><head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+<meta name="theme-color" content="#F4FAF9">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icons/icon-192.png">
+<link rel="stylesheet" href="styles.css">
+<script src="config.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<title>GASSIEN — Admin</title></head><body>
+<div class="admin-wrap">
+  <div class="topbar"><div class="brand"><div class="logo">G</div><div class="brand-copy"><strong>GASSIEN ADMIN</strong><span>Remote control</span></div></div><button class="ghost" id="logout">Déconnexion</button></div>
+  <div id="adminLogin" class="card">
+    <h2>Connexion admin</h2><p class="lead">Connecte-toi avec le compte admin autorisé.</p>
+    <div class="form-grid"><input class="input" id="ae" type="email" placeholder="Email"><input class="input" id="ap" type="password" placeholder="Mot de passe"><button class="save" id="alogin">Se connecter</button></div>
+  </div>
+  <div id="adminPanel" class="hidden">
+    <div class="card"><h2>Gassien</h2><p class="lead">Les changements enregistrés ici apparaissent dans son application en temps réel.</p>
+      <div class="admin-grid">
+        <div class="metric"><small>Aujourd’hui</small><strong id="todayTotal">0 ml</strong></div>
+        <div class="metric"><small>Objectif</small><strong id="currentGoal">—</strong></div>
+      </div>
+    </div>
+    <div class="card"><h2>Réglages à distance</h2>
+      <div class="form-grid">
+        <div><label>Objectif quotidien (ml)</label><input class="input" id="ag" type="number" min="500" step="50"></div>
+        <div><label>Rappel toutes les</label><select class="input" id="ai"><option value="30">30 min</option><option value="45">45 min</option><option value="60">60 min</option><option value="90">90 min</option><option value="120">120 min</option></select></div>
+        <div><label>Début</label><input class="input" id="aw" type="time"></div>
+        <div><label>Fin</label><input class="input" id="as" type="time"></div>
+        <button class="save" id="adminSave">Mettre à jour son application</button>
+      </div>
+    </div>
+  </div>
+</div><div class="toast" id="toast"></div><script src="admin.js"></script></body></html>

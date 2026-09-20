@@ -1,0 +1,80 @@
+<!doctype html><html lang="fr"><head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+<meta name="theme-color" content="#F4FAF9">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icons/icon-192.png">
+<link rel="stylesheet" href="styles.css">
+<script src="config.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<title>GASSIEN — Water Reminder</title></head>
+<body>
+<div class="auth" id="auth">
+  <div class="auth-card">
+    <div class="logo">G</div><h1>GASSIEN</h1>
+    <p id="authIntro">Connecte-toi pour retrouver tes données sur tous tes appareils.</p>
+    <div id="configWarning" class="setup-warning hidden">Supabase n’est pas encore configuré. L’app fonctionne en mode local de démonstration. Renseigne <b>config.js</b> pour activer la sauvegarde cloud et la synchronisation.</div>
+    <div class="form-grid" id="authFields">
+      <div><label>Email</label><input class="input" id="email" type="email" autocomplete="email"></div>
+      <div><label>Mot de passe</label><input class="input" id="password" type="password" autocomplete="current-password"></div>
+    </div>
+    <div class="auth-actions">
+      <button class="primary" id="loginBtn">Se connecter</button>
+      <button class="secondary" id="signupBtn">Créer le compte</button>
+      <button class="secondary hidden" id="demoBtn">Continuer en mode démo</button>
+    </div>
+  </div>
+</div>
+
+<div class="app">
+  <div class="topbar">
+    <div class="brand"><div class="logo">G</div><div class="brand-copy"><strong>GASSIEN</strong><span>Hydrate. Feel better.</span></div></div>
+    <div><button class="lang" id="langBtn">FR</button></div>
+  </div>
+  <div class="sync"><span class="dot" id="syncDot"></span><span id="syncText">Local</span></div>
+
+  <main style="margin-top:14px">
+    <section class="screen active" data-screen="today">
+      <h1 class="hello" id="hello">Salut Gassien 👋</h1>
+      <p class="subtitle" id="subtitle">Un petit verre maintenant, ton corps te remerciera plus tard.</p>
+      <div class="hero">
+        <div class="ring-wrap"><div class="ring" id="ring" style="--progress:0"></div><div class="ring-content">
+          <div class="value"><span id="currentMl">0</span> ml</div><div class="goal"><span id="ofText">sur</span> <span id="goalMl">2000</span> ml</div><div class="percent" id="percent">0%</div>
+        </div></div>
+        <div class="next-card"><div><small id="nextLabel">Prochain rappel</small><strong id="countdown">--:--</strong></div><div class="drop">💧</div></div>
+        <button class="primary" id="drink250">+ Boire 250 ml</button>
+      </div>
+      <div class="quick-title" id="quickLabel">Ajout rapide</div>
+      <div class="quick-grid"><button class="quick" data-ml="150">150 ml</button><button class="quick" data-ml="250">250 ml</button><button class="quick" data-ml="330">330 ml</button><button class="quick" data-ml="500">500 ml</button></div>
+      <div class="mini-grid">
+        <div class="mini"><small id="glassesLabel">Verres</small><strong id="glassCount">0</strong></div>
+        <div class="mini"><small id="remainingLabel">Restant</small><strong id="remaining">2,0 L</strong></div>
+        <div class="mini"><small id="syncLabel">Cloud</small><strong id="cloudState">—</strong></div>
+      </div>
+    </section>
+    <section class="screen" data-screen="history"><div class="card"><h2 id="historyTitle">Historique</h2><p class="lead" id="historyLead">Les dernières prises enregistrées aujourd’hui.</p><div class="list" id="historyList"></div></div></section>
+    <section class="screen" data-screen="progress"><div class="card"><h2 id="progressTitle">Progression</h2><p class="lead" id="progressLead">Vue simple de ta semaine.</p><div class="list" id="weekList"></div></div></section>
+    <section class="screen" data-screen="settings"><div class="card">
+      <h2 id="settingsTitle">Réglages</h2><p class="lead" id="settingsLead">Adapte l’app au rythme de ta journée.</p>
+      <div class="form-grid">
+        <div><label id="goalLabel">Objectif quotidien (ml)</label><input class="input" id="goalInput" type="number" min="500" step="50"></div>
+        <div><label id="intervalLabel">Rappel toutes les</label><select class="input" id="intervalInput"><option value="30">30 min</option><option value="45">45 min</option><option value="60">60 min</option><option value="90">90 min</option><option value="120">120 min</option></select></div>
+        <div><label id="wakeLabel">Début des rappels</label><input class="input" id="wakeInput" type="time"></div>
+        <div><label id="sleepLabel">Fin des rappels</label><input class="input" id="sleepInput" type="time"></div>
+        <button class="save" id="saveSettings">Enregistrer</button>
+        <button class="secondary" id="logoutBtn">Se déconnecter</button>
+      </div>
+    </div></section>
+  </main>
+  <nav class="bottom-nav">
+    <button class="nav-btn active" data-target="today"><span class="ico">⌂</span><span>Aujourd’hui</span></button>
+    <button class="nav-btn" data-target="history"><span class="ico">◷</span><span>Historique</span></button>
+    <button class="nav-btn" data-target="progress"><span class="ico">↗</span><span>Progression</span></button>
+    <button class="nav-btn" data-target="settings"><span class="ico">⚙︎</span><span>Réglages</span></button>
+  </nav>
+</div>
+<div class="toast" id="toast"></div>
+<script src="app.js"></script>
+</body></html>
