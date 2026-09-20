@@ -227,3 +227,38 @@ if (enablePushBtn) {
     enablePushReminders
   );
 }
+const testPushBtn = document.getElementById("testPushBtn");
+
+if (testPushBtn) {
+  testPushBtn.addEventListener("click", async () => {
+    try {
+      if (!sb || !userId) {
+        toast("Connecte-toi d’abord.");
+        return;
+      }
+
+      toast("Envoi du test…");
+
+      const { data, error } = await sb.functions.invoke(
+        "send-water-test"
+      );
+
+      if (error) {
+        console.error("Push test error:", error);
+        throw error;
+      }
+
+      console.log("Push test:", data);
+
+      if (data?.delivered > 0) {
+        toast("Notification envoyée 💧");
+      } else {
+        toast("Aucune notification envoyée");
+      }
+
+    } catch (error) {
+      console.error("Push test error:", error);
+      toast("Erreur pendant le test");
+    }
+  });
+}
