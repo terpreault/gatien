@@ -1,7 +1,7 @@
-const VERSION = "2lo-v5.0.0";
+const VERSION = "2lo-v5.0.1";
 const STATIC = [
-  "./","./index.html","./styles.css?v=5000","./app.js?v=5000","./config.js?v=5000","./manifest.json",
-  "./icons/icon-192.png","./icons/icon-512.png","./icons/apple-touch-icon.png"
+  "./","./index.html","./styles.css?v=5001","./app.js?v=5001","./config.js?v=5001","./manifest.json",
+  "./icons/icon-192.png","./icons/icon-512.png","./icons/apple-touch-icon.png","./icons/2LO-wordmark.png?v=5001"
 ];
 self.addEventListener("install",event=>{event.waitUntil(caches.open(VERSION).then(cache=>cache.addAll(STATIC)));self.skipWaiting();});
 self.addEventListener("activate",event=>{event.waitUntil(caches.keys().then(keys=>Promise.all(keys.filter(key=>key!==VERSION).map(key=>caches.delete(key)))).then(()=>self.clients.claim()));});
