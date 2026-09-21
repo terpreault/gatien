@@ -1,5 +1,5 @@
 
--- GASSIEN Water Reminder — Supabase setup
+-- 2LO Hydration Tracking App — Supabase setup
 -- Run this once in Supabase SQL Editor.
 
 create table if not exists public.hydration_settings (
@@ -86,6 +86,6 @@ using (admin_user_id = auth.uid());
 alter publication supabase_realtime add table public.hydration_settings;
 alter publication supabase_realtime add table public.hydration_logs;
 
--- After BOTH accounts exist, link your admin account to Gassien by replacing the IDs:
+-- After BOTH accounts exist, link your admin account to Gatien by replacing the IDs:
 -- insert into public.admin_links(admin_user_id, subject_user_id)
--- values ('YOUR_ADMIN_USER_UUID', 'GASSIEN_USER_UUID');
+-- values ('YOUR_ADMIN_USER_UUID', 'GATIEN_USER_UUID');

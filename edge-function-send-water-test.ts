@@ -13,7 +13,7 @@ export default {
       if (!publicKey || !privateKey) throw new Error("VAPID secrets missing");
 
       const vapid = { publicKey, privateKey, subject: "https://ieqnticbccxogltdyege.supabase.co" };
-      const payload = { title: "GATER 💧", body: "Test réussi ! C’est l’heure de boire un peu d’eau.", url: "./", tag: "gater-water-reminder" };
+      const payload = { title: "2LO 💧", body: "Test réussi ! C’est l’heure de boire un peu d’eau.", url: "./", tag: "2lo-water-reminder" };
       let delivered = 0;
       for (const sub of subscriptions) {
         const success = await sendPushNotification({ endpoint: sub.endpoint, keys: { p256dh: sub.p256dh, auth: sub.auth } }, payload, vapid);
